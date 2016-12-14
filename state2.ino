@@ -141,31 +141,37 @@ void TimeLEDS(int value)
     digitalWrite(LED16min, LOW);
     dimm8(value);
   }
-  else if(value < 16)
+  else if(value < 16) // > 8
   {
     digitalWrite(LED36min, LOW);
-    analogWrite(LED16min, 20);
+    analogWrite(LED16min, 0);
     digitalWrite(LED8min, HIGH); 
   }
-  else if(value < 24)
+  else if(value < 16 + 8) 
   {
     digitalWrite(LED36min, LOW);
     analogWrite(LED16min, 20);
     digitalWrite(LED8min, LOW); 
   }
-  else if(value <36)
+  else if(value < 36)
   {
     digitalWrite(LED36min, LOW);
     analogWrite(LED16min, 20);
     digitalWrite(LED8min, HIGH); 
   }
-  else if(value <44)
+  else if(value < 36 + 8) 
   {
     digitalWrite(LED36min, HIGH);
-    analogWrite(LED16min, 20);
+    analogWrite(LED16min, 0);
     digitalWrite(LED8min, LOW); 
   }
-  else if(value <52)
+  else if(value < 36 + 16) // 
+  {
+    digitalWrite(LED36min, HIGH);
+    analogWrite(LED16min, 0);
+    digitalWrite(LED8min, HIGH); 
+  }
+  else if(value < 36 + 16 + 8 )
   {
     digitalWrite(LED36min, HIGH);
     analogWrite(LED16min, 20);
