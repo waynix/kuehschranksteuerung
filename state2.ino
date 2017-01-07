@@ -21,7 +21,7 @@ const int LED16min = 10;
 const int LED8min = 11;
 const int timeDial = A7;
 
-
+//this counter stored the seconds until poweron
 int ausCounter = 0;
 volatile char globalButtonPressed = 0;
 int timeDialValue = 0;
@@ -101,7 +101,7 @@ void schrankAusAction()
   
   Serial.println(ausCounter);
   ausCounter--;
-  if(0 == ausCounter)
+  if(0 >= ausCounter)
   {
     enterState(Idle);
   }
@@ -132,9 +132,10 @@ void dimm8(int value)
  
   analogWrite(LED8min, dimmval); 
 }
-
+//Display remaining minutes
 void TimeLEDS(int value)
 {
+  value = value / 60;
   if(value < 8)
   {
     digitalWrite(LED36min, LOW);
@@ -191,12 +192,12 @@ int readTimeDial()
   int raw10BitDialValue = analogRead(timeDial);
   int raw8bitDialValue = raw10BitDialValue >> 2;
   int dialInMinutes =  raw8bitDialValue *60 /250;
-  return dialInMinutes + 2;
+  return dialInMinutes;
 }
 // the loop function runs over and over again forever
 void loop() {
 
-  timeDialValue = readTimeDial();
+  timeDialValue = readTimeDial() * 60;
   if(ausCounter > timeDialValue)
   {
      ausCounter = timeDialValue;
